@@ -77,7 +77,7 @@ def getting_sj_salaries(url, headers, payload):
     stop = True
     page_number = 0
     salaries = []
-    while stop != False:
+    while stop:
         payload['page'] = page_number
         response = requests.get(url, headers=headers, params=payload)
         response.raise_for_status()
