@@ -46,7 +46,13 @@ def get_hh_salaries(url, payload):
     return vacancies_number, salaries
 
 
-def predict_rub_salary_hh(url, payload, specializations):
+def predict_rub_salary_hh(url, specializations):
+    payload = {
+        'specialization': 1.221,
+        'area': 1,
+        'text': [],
+        'page': [],
+    }
     specialist_salaries = {}
     for name in specializations:
         payload['text'] = name
@@ -89,7 +95,18 @@ def get_sj_salaries(url, headers, payload):
     return salaries, vacancies_number
 
 
-def predict_rub_salary_sj(url, headers, payload, specializations):
+def predict_rub_salary_sj(url, headers, specializations):
+    payload = {
+        'page': [],
+        'count': 20,
+        'keyword': [],
+        'keywors': {
+            'srws': 1,
+            'skwc': 'or',
+            'key': 'Программист',
+        },
+        'town': 'Москва',
+    }
     specialist_salaries = {}
     for name in specializations:
         payload['keyword'] = name
@@ -139,36 +156,17 @@ if __name__ == '__main__':
     ]
 
     hh_url = 'https://api.hh.ru/vacancies'
-    hh_payload = {
-        'specialization': 1.221,
-        'area': 1,
-        'text': [],
-        'page': [],
-    }
 
     sj_url = 'https://api.superjob.ru/2.0/vacancies'
     sj_headers = {
         'X-Api-App-Id': secret_key
     }
-    sj_payload = {
-        'page': [],
-        'count': 20,
-        'keyword': [],
-        'keywors': {
-            'srws': 1,
-            'skwc': 'or',
-            'key': 'Программист',
-        },
-        'town': 'Москва',
-    }
 
     hh_table_title = 'HeadHunter Moscow'
     sj_table_title = 'SuperJob Moscow'
 
-    hh_programmer_salaries = predict_rub_salary_hh(hh_url, hh_payload,
-                                                   specializations)
+    hh_programmer_salaries = predict_rub_salary_hh(hh_url, specializations)
     sj_programmer_salaries = predict_rub_salary_sj(sj_url, sj_headers,
-                                                   sj_payload,
                                                    specializations)
 
     create_table(hh_programmer_salaries, hh_table_title)
