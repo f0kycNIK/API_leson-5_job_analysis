@@ -46,9 +46,9 @@ def get_hh_salaries(url, payload):
     return vacancies_number, salaries
 
 
-def predict_rub_salary_hh(url, payload, list):
+def predict_rub_salary_hh(url, payload, specializations):
     dic = {}
-    for name in list:
+    for name in specializations:
         payload['text'] = name
         vacancies_number, salaries = get_hh_salaries(url, payload)
         sorted_salaries = [float(var) for var in salaries if var]
@@ -89,9 +89,9 @@ def get_sj_salaries(url, headers, payload):
     return salaries, vacancies_number
 
 
-def predict_rub_salary_sj(url, headers, payload, list):
+def predict_rub_salary_sj(url, headers, payload, specializations):
     dic = {}
-    for name in list:
+    for name in specializations:
         payload['keyword'] = name
         salaries, vacancies_number = get_sj_salaries(url, headers, payload)
         sorted_salaries = [float(var) for var in salaries if var]
