@@ -8,14 +8,13 @@ from terminaltables import AsciiTable
 
 def predict_salary(salary_from, salary_to):
     if not salary_from and not salary_to:
-        salary = None
+        return None
     elif salary_from and not salary_to:
-        salary = salary_from * 1.2
+        return salary_from * 1.2
     elif not salary_from and salary_to:
-        salary = salary_to * 0.9
+        return salary_to * 0.9
     else:
-        salary = (salary_from + salary_to) / 2
-    return salary
+        return (salary_from + salary_to) / 2
 
 
 def calculate_hh_salaries(vacancies):
