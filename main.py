@@ -37,10 +37,11 @@ def get_hh_salaries(url, payload):
         payload['page'] = page
         response = requests.get(url, params=payload)
         response.raise_for_status()
-        vacancies = response.json()['items']
-        vacancies_number = response.json()['found']
+        searching_results = response.json()
+        vacancies = searching_results['items']
+        vacancies_number = searching_results['found']
         salaries += calculate_hh_salaries(vacancies)
-        pages_number = response.json()['pages']
+        pages_number = searching_results['pages']
         page += 1
     return vacancies_number, salaries
 
