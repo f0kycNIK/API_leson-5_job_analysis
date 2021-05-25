@@ -7,12 +7,11 @@ from terminaltables import AsciiTable
 
 
 def predict_salary(salary_from, salary_to):
-    condition = [0, None]
-    if salary_from in condition and salary_to in condition:
+    if not salary_from and not salary_to:
         salary = None
-    elif salary_from and salary_to in condition:
+    elif salary_from and not salary_to:
         salary = salary_from * 1.2
-    elif salary_from in condition and salary_to:
+    elif not salary_from and salary_to:
         salary = salary_to * 0.9
     else:
         salary = (salary_from + salary_to) / 2
@@ -22,7 +21,7 @@ def predict_salary(salary_from, salary_to):
 def calculating_hh_salaries(vacancies):
     salaries = []
     for vacancy in vacancies:
-        if vacancy['salary'] is None or vacancy['salary']['currency'] != 'RUR':
+        if not vacancy['salary'] or vacancy['salary']['currency'] != 'RUR':
             salaries.append(None)
         else:
             salary_from = vacancy['salary']['from']
@@ -95,7 +94,7 @@ def predict_rub_salary_sj(url, headers, payload, list):
     for name in list:
         payload['keyword'] = name
         salaries, vacancies_number = getting_sj_salaries(url, headers, payload)
-        sorted_salaries = [float(var) for var in salaries if var != None]
+        sorted_salaries = [float(var) for var in salaries if var]
         dic.update(
             {name: {
                 'vacabcies_found': str(vacancies_number),
