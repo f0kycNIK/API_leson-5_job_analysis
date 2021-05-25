@@ -106,7 +106,7 @@ def predict_rub_salary_sj(url, headers, payload, list):
     return dic
 
 
-def create_table(dicts, table_title):
+def create_table(specialist_salaries, table_title):
     table_data = [
         [
             'Язык программирования',
@@ -115,7 +115,7 @@ def create_table(dicts, table_title):
             'Средняя зарплата'
         ]
     ]
-    for key, value in dicts.items():
+    for key, value in specialist_salaries.items():
         table_data.append(key.split() + list(value.values()))
     table = AsciiTable(table_data)
     table.title = table_title
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
     secret_key = os.getenv('SECRET_KEY')
 
-    specialization_list = [
+    specializations = [
         'Python',
         'JavaScript',
         'Java',
@@ -166,10 +166,10 @@ if __name__ == '__main__':
     sj_table_title = 'SuperJob Moscow'
 
     hh_programmer_salaries = predict_rub_salary_hh(hh_url, hh_payload,
-                                                   specialization_list)
+                                                   specializations)
     sj_programmer_salaries = predict_rub_salary_sj(sj_url, sj_headers,
                                                    sj_payload,
-                                                   specialization_list)
+                                                   specializations)
 
     create_table(hh_programmer_salaries, hh_table_title)
     create_table(sj_programmer_salaries, sj_table_title)
