@@ -1,7 +1,7 @@
 # Programming vacancies compare
-This program compares the salaries of programmers (Pthyaton, JavaScript,
+This program compares the salaries of programmers (Python, JavaScript,
 Java, Rubby, PHP, C++, CSS, C#) in Moscow. 
-Statistics are based on these sites::
+Statistics are based on these sites:
 1. <https://hh.ru/> 
 2. <https://www.superjob.ru/>
 
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 The program is started by the command:
 
 ```python
-./python main.py
+python main.py
 ```
 
 
