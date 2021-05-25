@@ -18,7 +18,7 @@ def predict_salary(salary_from, salary_to):
     return salary
 
 
-def calculating_hh_salaries(vacancies):
+def calculate_hh_salaries(vacancies):
     salaries = []
     for vacancy in vacancies:
         if not vacancy['salary'] or vacancy['salary']['currency'] != 'RUR':
@@ -30,7 +30,7 @@ def calculating_hh_salaries(vacancies):
     return salaries
 
 
-def getting_hh_salaries(url, payload):
+def get_hh_salaries(url, payload):
     salaries = []
     pages_number = 1
     page = 0
@@ -40,7 +40,7 @@ def getting_hh_salaries(url, payload):
         response.raise_for_status()
         vacancies = response.json()['items']
         vacancies_number = response.json()['found']
-        salaries += calculating_hh_salaries(vacancies)
+        salaries += calculate_hh_salaries(vacancies)
         pages_number = response.json()['pages']
         page += 1
     return vacancies_number, salaries
@@ -50,7 +50,7 @@ def predict_rub_salary_hh(url, payload, list):
     dic = {}
     for name in list:
         payload['text'] = name
-        vacancies_number, salaries = getting_hh_salaries(url, payload)
+        vacancies_number, salaries = get_hh_salaries(url, payload)
         sorted_salaries = [float(var) for var in salaries if var]
         dic.update(
             {
@@ -64,7 +64,7 @@ def predict_rub_salary_hh(url, payload, list):
     return dic
 
 
-def calculating_sj_salaries(vacancies):
+def calculate_sj_salaries(vacancies):
     salaries = []
     for vacancy in vacancies:
         salary_from = vacancy['payment_from']
@@ -73,7 +73,7 @@ def calculating_sj_salaries(vacancies):
     return salaries
 
 
-def getting_sj_salaries(url, headers, payload):
+def get_sj_salaries(url, headers, payload):
     stop = True
     page_number = 0
     salaries = []
@@ -82,7 +82,7 @@ def getting_sj_salaries(url, headers, payload):
         response = requests.get(url, headers=headers, params=payload)
         response.raise_for_status()
         vacancies = response.json()
-        salaries += calculating_sj_salaries(vacancies['objects'])
+        salaries += calculate_sj_salaries(vacancies['objects'])
         stop = vacancies['more']
         vacancies_number = vacancies['total']
         page_number += 1
@@ -93,7 +93,7 @@ def predict_rub_salary_sj(url, headers, payload, list):
     dic = {}
     for name in list:
         payload['keyword'] = name
-        salaries, vacancies_number = getting_sj_salaries(url, headers, payload)
+        salaries, vacancies_number = get_sj_salaries(url, headers, payload)
         sorted_salaries = [float(var) for var in salaries if var]
         dic.update(
             {name: {
@@ -106,7 +106,7 @@ def predict_rub_salary_sj(url, headers, payload, list):
     return dic
 
 
-def creature_table(dicts, table_title):
+def create_table(dicts, table_title):
     table_data = [
         [
             'Язык программирования',
@@ -171,5 +171,5 @@ if __name__ == '__main__':
                                                    sj_payload,
                                                    specialization_list)
 
-    creature_table(hh_programmer_salaries, hh_table_title)
-    creature_table(sj_programmer_salaries, sj_table_title)
+    create_table(hh_programmer_salaries, hh_table_title)
+    create_table(sj_programmer_salaries, sj_table_title)
