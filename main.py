@@ -47,12 +47,12 @@ def get_hh_salaries(url, payload):
 
 
 def predict_rub_salary_hh(url, payload, specializations):
-    dic = {}
+    specialist_salaries = {}
     for name in specializations:
         payload['text'] = name
         vacancies_number, salaries = get_hh_salaries(url, payload)
-        sorted_salaries = [float(var) for var in salaries if var]
-        dic.update(
+        sorted_salaries = [float(salary) for salary in salaries if salary]
+        specialist_salaries.update(
             {
                 name: {
                     'vacabcies_found': str(vacancies_number),
@@ -61,7 +61,7 @@ def predict_rub_salary_hh(url, payload, specializations):
                 }
             }
         )
-    return dic
+    return specialist_salaries
 
 
 def calculate_sj_salaries(vacancies):
@@ -74,28 +74,28 @@ def calculate_sj_salaries(vacancies):
 
 
 def get_sj_salaries(url, headers, payload):
-    stop = True
+    additional_vacancies = True
     page_number = 0
     salaries = []
-    while stop:
+    while additional_vacancies:
         payload['page'] = page_number
         response = requests.get(url, headers=headers, params=payload)
         response.raise_for_status()
         vacancies = response.json()
         salaries += calculate_sj_salaries(vacancies['objects'])
-        stop = vacancies['more']
+        additional_vacancies = vacancies['more']
         vacancies_number = vacancies['total']
         page_number += 1
     return salaries, vacancies_number
 
 
 def predict_rub_salary_sj(url, headers, payload, specializations):
-    dic = {}
+    specialist_salaries = {}
     for name in specializations:
         payload['keyword'] = name
         salaries, vacancies_number = get_sj_salaries(url, headers, payload)
         sorted_salaries = [float(var) for var in salaries if var]
-        dic.update(
+        specialist_salaries.update(
             {name: {
                 'vacabcies_found': str(vacancies_number),
                 'vacancies_processed': str(len(sorted_salaries)),
@@ -103,7 +103,7 @@ def predict_rub_salary_sj(url, headers, payload, specializations):
             }
             }
         )
-    return dic
+    return specialist_salaries
 
 
 def create_table(specialist_salaries, table_title):
