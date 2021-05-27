@@ -136,7 +136,9 @@ def create_table(specialist_salaries, table_title):
         table_data.append(key.split() + list(value.values()))
     table = AsciiTable(table_data)
     table.title = table_title
-    print(table.table)
+    salaries_table = table.table
+    return salaries_table
+    # print(table.table)
 
 
 if __name__ == '__main__':
@@ -169,5 +171,8 @@ if __name__ == '__main__':
     sj_programmer_salaries = predict_rub_salary_sj(sj_url, sj_headers,
                                                    specializations)
 
-    create_table(hh_programmer_salaries, hh_table_title)
-    create_table(sj_programmer_salaries, sj_table_title)
+    hh_salaries_table = create_table(hh_programmer_salaries, hh_table_title)
+    print(hh_salaries_table)
+
+    sj_salaries_table = create_table(sj_programmer_salaries, sj_table_title)
+    print(sj_salaries_table)
