@@ -142,7 +142,7 @@ def create_table(specialist_salaries, table_title):
 if __name__ == '__main__':
     load_dotenv()
 
-    secret_key = os.getenv('SECRET_KEY')
+    sj_token = os.getenv('SJ_TOKEN')
 
     specializations = [
         'Python',
@@ -159,7 +159,7 @@ if __name__ == '__main__':
 
     sj_url = 'https://api.superjob.ru/2.0/vacancies'
     sj_headers = {
-        'X-Api-App-Id': secret_key
+        'X-Api-App-Id': sj_token
     }
 
     hh_table_title = 'HeadHunter Moscow'
