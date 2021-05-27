@@ -59,13 +59,13 @@ def predict_rub_salary_hh(url, specializations):
     for name in specializations:
         payload['text'] = name
         vacancies_number, salaries = get_hh_salaries(url, payload)
-        sorted_salaries = [float(salary) for salary in salaries if salary]
+        filtering_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries.update(
             {
                 name: {
                     'vacabcies_found': str(vacancies_number),
-                    'vacancies_processed': str(len(sorted_salaries)),
-                    'average_salary': str(int(np.mean(sorted_salaries))),
+                    'vacancies_processed': str(len(filtering_salaries)),
+                    'average_salary': str(int(np.mean(filtering_salaries))),
                 }
             }
         )
@@ -115,12 +115,12 @@ def predict_rub_salary_sj(url, headers, specializations):
     for name in specializations:
         payload['keyword'] = name
         salaries, vacancies_number = get_sj_salaries(url, headers, payload)
-        sorted_salaries = [float(var) for var in salaries if var]
+        filtering_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries.update(
             {name: {
                 'vacabcies_found': str(vacancies_number),
-                'vacancies_processed': str(len(sorted_salaries)),
-                'average_salary': str(int(np.mean(sorted_salaries))),
+                'vacancies_processed': str(len(filtering_salaries)),
+                'average_salary': str(int(np.mean(filtering_salaries))),
             }
             }
         )
@@ -136,8 +136,9 @@ def create_table(specialist_salaries, table_title):
             'Средняя зарплата'
         ]
     ]
-    for key, value in specialist_salaries.items():
-        table_data.append(key.split() + list(value.values()))
+    for programming_language, search_results in specialist_salaries.items():
+        table_data.append(programming_language.split()
+                          + list(search_results.values()))
     table = AsciiTable(table_data)
     table.title = table_title
     salaries_table = table.table
@@ -174,9 +175,7 @@ if __name__ == '__main__':
     hh_programmer_salaries = predict_rub_salary_hh(hh_url, specializations)
     sj_programmer_salaries = predict_rub_salary_sj(sj_url, sj_headers,
                                                    specializations)
-
     hh_salaries_table = create_table(hh_programmer_salaries, hh_table_title)
     print(hh_salaries_table)
-
     sj_salaries_table = create_table(sj_programmer_salaries, sj_table_title)
     print(sj_salaries_table)
