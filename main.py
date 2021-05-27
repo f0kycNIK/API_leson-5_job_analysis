@@ -29,7 +29,15 @@ def calculate_hh_salaries(vacancies):
     return salaries
 
 
-def get_hh_salaries(url, payload):
+def get_hh_salaries(url, programming_language):
+    programmer_id = 1.221
+    moscow_id = 1
+    payload = {
+        'specialization': programmer_id,
+        'area': moscow_id,
+        'text': programming_language,
+        'page': [],
+    }
     salaries = []
     pages_number = 1
     page = 0
@@ -47,22 +55,13 @@ def get_hh_salaries(url, payload):
 
 
 def predict_rub_salary_hh(url, specializations):
-    programmer_id = 1.221
-    moscow_id = 1
-    payload = {
-        'specialization': programmer_id,
-        'area': moscow_id,
-        'text': [],
-        'page': [],
-    }
     specialist_salaries = {}
-    for name in specializations:
-        payload['text'] = name
-        vacancies_number, salaries = get_hh_salaries(url, payload)
+    for programming_language in specializations:
+        vacancies_number, salaries = get_hh_salaries(url, programming_language)
         filtering_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries.update(
             {
-                name: {
+                programming_language: {
                     'vacabcies_found': str(vacancies_number),
                     'vacancies_processed': str(len(filtering_salaries)),
                     'average_salary': str(int(np.mean(filtering_salaries))),
@@ -81,7 +80,20 @@ def calculate_sj_salaries(vacancies):
     return salaries
 
 
-def get_sj_salaries(url, headers, payload):
+def get_sj_salaries(url, headers, programming_language):
+    search_by_post = 1
+    number_vacancies_per_page = 20
+    payload = {
+        'page': [],
+        'count': number_vacancies_per_page,
+        'keyword': programming_language,
+        'keywors': {
+            'srws': search_by_post,
+            'skwc': 'or',
+            'key': 'Программист',
+        },
+        'town': 'Москва',
+    }
     additional_vacancies = True
     page_number = 0
     salaries = []
@@ -98,26 +110,13 @@ def get_sj_salaries(url, headers, payload):
 
 
 def predict_rub_salary_sj(url, headers, specializations):
-    search_by_post = 1
-    number_vacancies_per_page = 20
-    payload = {
-        'page': [],
-        'count': number_vacancies_per_page,
-        'keyword': [],
-        'keywors': {
-            'srws': search_by_post,
-            'skwc': 'or',
-            'key': 'Программист',
-        },
-        'town': 'Москва',
-    }
     specialist_salaries = {}
-    for name in specializations:
-        payload['keyword'] = name
-        salaries, vacancies_number = get_sj_salaries(url, headers, payload)
+    for programming_language in specializations:
+        salaries, vacancies_number = get_sj_salaries(url, headers,
+                                                     programming_language)
         filtering_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries.update(
-            {name: {
+            {programming_language: {
                 'vacabcies_found': str(vacancies_number),
                 'vacancies_processed': str(len(filtering_salaries)),
                 'average_salary': str(int(np.mean(filtering_salaries))),
