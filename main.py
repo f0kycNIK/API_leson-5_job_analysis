@@ -47,9 +47,11 @@ def get_hh_salaries(url, payload):
 
 
 def predict_rub_salary_hh(url, specializations):
+    programmer_id = 1.221
+    moscow_id = 1
     payload = {
-        'specialization': 1.221,
-        'area': 1,
+        'specialization': programmer_id,
+        'area': moscow_id,
         'text': [],
         'page': [],
     }
@@ -96,12 +98,14 @@ def get_sj_salaries(url, headers, payload):
 
 
 def predict_rub_salary_sj(url, headers, specializations):
+    search_by_post = 1
+    number_vacancies_per_page = 20
     payload = {
         'page': [],
-        'count': 20,
+        'count': number_vacancies_per_page,
         'keyword': [],
         'keywors': {
-            'srws': 1,
+            'srws': search_by_post,
             'skwc': 'or',
             'key': 'Программист',
         },
@@ -138,7 +142,7 @@ def create_table(specialist_salaries, table_title):
     table.title = table_title
     salaries_table = table.table
     return salaries_table
-    # print(table.table)
+
 
 
 if __name__ == '__main__':
