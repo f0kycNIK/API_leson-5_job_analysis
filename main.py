@@ -59,15 +59,11 @@ def predict_rub_salary_hh(url, specializations):
     for programming_language in specializations:
         vacancies_number, salaries = get_hh_salaries(url, programming_language)
         filtering_salaries = [float(salary) for salary in salaries if salary]
-        specialist_salaries.update(
-            {
-                programming_language: {
+        specialist_salaries[programming_language] = {
                     'vacabcies_found': str(vacancies_number),
                     'vacancies_processed': str(len(filtering_salaries)),
                     'average_salary': str(int(np.mean(filtering_salaries))),
                 }
-            }
-        )
     return specialist_salaries
 
 
@@ -115,14 +111,11 @@ def predict_rub_salary_sj(url, headers, specializations):
         salaries, vacancies_number = get_sj_salaries(url, headers,
                                                      programming_language)
         filtering_salaries = [float(salary) for salary in salaries if salary]
-        specialist_salaries.update(
-            {programming_language: {
+        specialist_salaries[programming_language] = {
                 'vacabcies_found': str(vacancies_number),
                 'vacancies_processed': str(len(filtering_salaries)),
                 'average_salary': str(int(np.mean(filtering_salaries))),
             }
-            }
-        )
     return specialist_salaries
 
 
