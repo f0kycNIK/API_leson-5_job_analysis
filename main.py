@@ -129,7 +129,7 @@ def create_table(specialist_salaries, table_title):
         ]
     ]
     for programming_language, search_results in specialist_salaries.items():
-        table_data.append(programming_language.split()
+        table_data.append([programming_language]
                           + list(search_results.values()))
     table = AsciiTable(table_data)
     table.title = table_title
