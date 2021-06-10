@@ -22,10 +22,10 @@ def calculate_hh_salaries(vacancies):
     for vacancy in vacancies:
         if not vacancy['salary'] or vacancy['salary']['currency'] != 'RUR':
             salaries.append(None)
-        else:
-            salary_from = vacancy['salary']['from']
-            salary_to = vacancy['salary']['to']
-            salaries.append(predict_salary(salary_from, salary_to))
+            continue
+        salary_from = vacancy['salary']['from']
+        salary_to = vacancy['salary']['to']
+        salaries.append(predict_salary(salary_from, salary_to))
     return salaries
 
 
