@@ -78,10 +78,10 @@ def calculate_sj_salaries(vacancies):
 
 def get_sj_salaries(url, headers, programming_language):
     search_by_post = 1
-    number_vacancies_per_page = 20
+    per_page_vacancies_number = 20
     payload = {
         'page': [],
-        'count': number_vacancies_per_page,
+        'count': per_page_vacancies_number,
         'keyword': programming_language,
         'keywors': {
             'srws': search_by_post,
@@ -110,11 +110,11 @@ def predict_rub_salary_sj(url, headers, specializations):
     for programming_language in specializations:
         salaries, vacancies_number = get_sj_salaries(url, headers,
                                                      programming_language)
-        filtering_salaries = [float(salary) for salary in salaries if salary]
+        filtered_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries[programming_language] = {
                 'vacabcies_found': vacancies_number,
-                'vacancies_processed': len(filtering_salaries),
-                'average_salary': int(np.mean(filtering_salaries)),
+                'vacancies_processed': len(filtered_salaries),
+                'average_salary': int(np.mean(filtered_salaries)),
             }
     return specialist_salaries
 
