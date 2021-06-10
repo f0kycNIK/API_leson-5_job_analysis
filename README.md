@@ -11,7 +11,7 @@ For the program to work, you need to get a 'SECRET_KEY' by registering on
 [SuperJob.ru](https://api.superjob.ru/#) which is taken from the `.env` file.
 
 ```python
-secret_key = os.getenv('SECRET_KEY')
+sj_token = os.getenv('SJ_TOKEN')
 ```
 
 The `.env` file is located in the root directory
@@ -23,7 +23,7 @@ The `.env` file is located in the root directory
 In the `.env` file, the keys are written as follows:
 
 ```python
-SECRET_KEY=[secret key]
+SJ_TOKEN=[secret key]
 ```
  
 Python3 must already be installed. Then use pip (or pip3 if you have
