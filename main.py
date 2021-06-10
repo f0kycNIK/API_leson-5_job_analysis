@@ -36,7 +36,6 @@ def get_hh_salaries(url, programming_language):
         'specialization': programmer_id,
         'area': moscow_id,
         'text': programming_language,
-        'page': [],
     }
     salaries = []
     pages_number = 1
@@ -80,7 +79,6 @@ def get_sj_salaries(url, headers, programming_language):
     search_by_post = 1
     per_page_vacancies_number = 20
     payload = {
-        'page': [],
         'count': per_page_vacancies_number,
         'keyword': programming_language,
         'keywors': {
