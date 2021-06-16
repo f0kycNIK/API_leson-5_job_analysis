@@ -62,7 +62,7 @@ def predict_rub_salary_hh(url, specializations):
                     'vacancies_found': str(vacancies_number),
                     'vacancies_processed': str(len(filtering_salaries)),
                     'average_salary': str(int(np.mean(filtering_salaries))),
-                }
+        }
     return specialist_salaries
 
 
@@ -113,7 +113,7 @@ def predict_rub_salary_sj(url, headers, specializations):
                 'vacancies_found': vacancies_number,
                 'vacancies_processed': len(filtered_salaries),
                 'average_salary': int(np.mean(filtered_salaries)),
-            }
+        }
     return specialist_salaries
 
 
