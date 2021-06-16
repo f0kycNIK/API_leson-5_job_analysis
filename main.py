@@ -57,11 +57,11 @@ def predict_rub_salary_hh(url, specializations):
     specialist_salaries = {}
     for programming_language in specializations:
         vacancies_number, salaries = get_hh_salaries(url, programming_language)
-        filtering_salaries = [float(salary) for salary in salaries if salary]
+        filtered_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries[programming_language] = {
                     'vacancies_found': vacancies_number,
-                    'vacancies_processed': len(filtering_salaries),
-                    'average_salary': int(np.mean(filtering_salaries)),
+                    'vacancies_processed': len(filtered_salaries),
+                    'average_salary': int(np.mean(filtered_salaries)),
         }
     return specialist_salaries
 
