@@ -58,9 +58,9 @@ def predict_rub_salary_hh(url, specializations):
         vacancies_number, salaries = get_hh_salaries(url, programming_language)
         filtered_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries[programming_language] = {
-                    'vacancies_found': vacancies_number,
-                    'vacancies_processed': len(filtered_salaries),
-                    'average_salary': int(np.mean(filtered_salaries)),
+            'vacancies_found': vacancies_number,
+            'vacancies_processed': len(filtered_salaries),
+            'average_salary': int(np.mean(filtered_salaries)),
         }
     return specialist_salaries
 
@@ -109,9 +109,9 @@ def predict_rub_salary_sj(url, headers, specializations):
                                                      programming_language)
         filtered_salaries = [float(salary) for salary in salaries if salary]
         specialist_salaries[programming_language] = {
-                'vacancies_found': vacancies_number,
-                'vacancies_processed': len(filtered_salaries),
-                'average_salary': int(np.mean(filtered_salaries)),
+            'vacancies_found': vacancies_number,
+            'vacancies_processed': len(filtered_salaries),
+            'average_salary': int(np.mean(filtered_salaries)),
         }
     return specialist_salaries
 
@@ -132,7 +132,6 @@ def create_table(specialist_salaries, table_title):
     table.title = table_title
     salaries_table = table.table
     return salaries_table
-
 
 
 if __name__ == '__main__':
